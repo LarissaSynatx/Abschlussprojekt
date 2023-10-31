@@ -9,9 +9,11 @@ class Druide(name: String,hp: Int,waffe: String,atk: Int,schild: Boolean):Held(n
         println("Die Lebenspunkte liegen jetzt bei ${schurke.hp} HP.")
     }
 
-    fun heilzauber(held: Held) {
-        println("Welchen deiner Kameraden soll $name heilen?")
-
+    fun heilzauber(held: MutableList<Held>) {
+        val heilen = auswahl(held)
+        heilen!!.hp += 20
+        println("$heilen wurde geheilt!")
+        println("Die Lebenspunkte liegen jetzt bei ${heilen!!.hp} HP.")
     }
 
     fun schutzzauber(schurke: Schurke) {

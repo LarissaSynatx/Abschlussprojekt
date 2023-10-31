@@ -45,4 +45,7 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
 //        }
 //    }
     }
+    override fun toString(): String {
+        return name
+    }
 }

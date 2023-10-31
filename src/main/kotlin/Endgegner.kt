@@ -1,5 +1,6 @@
 class Endgegner(name: String, hp: Int, waffe: String, atk: Int): Schurke(name,hp,waffe,atk) {
-    fun unsichtbar(held: Held) {
+    fun unsichtbar(helden: MutableList<Held>) {
+        val held = helden.random()
         if(!held.schild){
             val schaden= 50+atk
             println("$name hat sich unsichtbar gemacht und greift nun hinterrücks ${held.name} an!")
