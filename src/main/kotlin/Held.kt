@@ -1,6 +1,11 @@
-open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int) {
-    open fun basicAtk() {
+open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean) {
 
+    open fun basicAtk(schurke: Schurke) {
+        val schaden= 10+atk
+        println("$name greift ${schurke.name} an und verursacht $schaden Schaden!")
+        Thread.sleep(300)
+        schurke.hp -= schaden
+        println("Die Lebenspunkte liegen jetzt bei ${schurke.hp} HP.")
     }
 
     fun beutel(beutel: Beutel) {

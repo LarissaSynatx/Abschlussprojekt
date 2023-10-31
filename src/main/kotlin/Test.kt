@@ -1,6 +1,19 @@
 fun main() {
+    val helden: MutableList<Held> = mutableListOf()
+   helden.addAll(
+        mutableListOf(
+
+    Druide("Alderwood",500,"Stab",100,false),
+    Zwerg("Gimli",600,"Axt",100,true),
+    Dunkelelfe("Lilithra",700,"Gurthang-Schwert",100,"Dolch",false)))
+
     val beutel = Beutel(heiltrank = 3, powertrank = 3)
-    val held = Druide("Merlin",100,"Stab",100)
-    held.beutel(beutel)
+//    val druide = Druide("Alderwood",500,"Stab",100,false)
+//    val zwerg = Zwerg("Gimli",600,"Axt",100,true)
+//    val dunkelelfe = Dunkelelfe("Lilithra",700,"Gurthang-Schwert",100,"Dolch",false)
+    val schurke1 = Endgegner("Icy",1000,"Hammer",100)
+
+
+
 
 }
