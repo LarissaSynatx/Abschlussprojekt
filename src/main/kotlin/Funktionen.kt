@@ -7,3 +7,6 @@ fun auswahl(helden:MutableList<Held>): Held?{
     }
     return helden.find { it.name == input }
 }
+
+
+
