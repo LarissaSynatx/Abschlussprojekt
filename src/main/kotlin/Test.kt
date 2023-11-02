@@ -9,23 +9,23 @@ fun main() {
         )
     )
 
-    val schurken: MutableList<Schurke> = mutableListOf()
-    schurken.addAll(
+    val gegner: MutableList<Gegner> = mutableListOf()
+    gegner.addAll(
         mutableListOf(
             Endgegner("Icy", 1000, "Hammer", 100),
-                    Gehilfe("Stormy",400,"Dolch",100,false)
+            Gehilfe("Stormy", 400, "Dolch", 100)
         )
     )
 
-    schurken.filterIsInstance<Endgegner>().first().schneesturm(helden)
+    val beutel = Beutel()
+//    beutel.inhalt()
 
-    val beutel = Beutel(heiltrank = 3, powertrank = 3)
+    gegner.filterIsInstance<Gehilfe>().first().stehlen(beutel)
+//    gegner.filterIsInstance<Endgegner>().first().schneesturm(helden)
 //    val druide = Druide("Alderwood",500,"Stab",100,false)
 //    val zwerg = Zwerg("Gimli",600,"Axt",100,true)
 //    val dunkelelfe = Dunkelelfe("Lilithra",700,"Gurthang-Schwert",100,"Dolch",false)
-//
 //    helden.filterIsInstance<Druide>().first().heilzauber(helden)
 //    helden.filterIsInstance<Druide>().first().beutel(beutel)
-
 
 }

@@ -1,4 +1,4 @@
-class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Schurke(name, hp, waffe, atk) {
+class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
     private var gehilfe = 1
 
     fun unsichtbar(helden: MutableList<Held>) {
@@ -57,19 +57,12 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Schurke(name, 
         println("$name hat bei allen einen Schaden von $schaden verursacht!")
     }
 
-    fun beschwörungszauber(schurke: MutableList<Schurke>) { //überarbeiten, noch nicht richtig/fertig!
+    fun beschwörungszauber(gegner: MutableList<Gegner>) {
+        val gehilfe1 = gegner.filterIsInstance<Gehilfe>().first()
         if (gehilfe > 0) {
             println("$name beschwört ihre Gehilfin..")
             gehilfe = 0
-            gehilfe.
-        }else println("$name hat den Zauber in dieser Runde bereits gesprochen..")
-    }
-
-    override fun basicAtk(helden: MutableList<Held>) {
-        super.basicAtk(helden)
-    }
-
-    override fun powerAtk(helden: MutableList<Held>) {
-        super.powerAtk(helden)
+            gehilfe1.wurdeBeschworen = true
+        } else println("$name hat den Zauber in dieser Runde bereits gesprochen..")
     }
 }

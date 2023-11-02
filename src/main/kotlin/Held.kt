@@ -1,19 +1,16 @@
 open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean) {
 
-    open fun basicAtk(schurke: Schurke) {
+    open fun basicAtk(gegner: Gegner) {
         val schaden= 10+atk
-        println("$name greift ${schurke.name} an und verursacht $schaden Schaden!")
+        println("$name greift ${gegner.name} an und verursacht $schaden Schaden!")
         Thread.sleep(300)
-        schurke.hp -= schaden
-        println("Die Lebenspunkte liegen jetzt bei ${schurke.hp} HP.")
+        gegner.hp -= schaden
+        println("Die Lebenspunkte liegen jetzt bei ${gegner.hp} HP.")
     }
 
     fun beutel(beutel: Beutel) {
-        println(
-            "Wähle einen Trank.." +
-                    "1 für einen Heiltrank" +
-                    " oder 2 für einen Powertrank"
-        )
+        println("Wähle einen Trank..")
+        beutel.inhalt()
         var input = readln().toInt()
 
         while (input !in 1..2) {
@@ -22,13 +19,13 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
         }
         when (input) {
             1 -> {
-                beutel.heiltrank -= 1
+                beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1
                 hp += 50
                 println("$name hat den Heiltrank gewählt." +
                             " Seine Lebenspunkte sind jetzt bei $hp HP.")
             }
             2 -> {
-                beutel.powertrank -= 1
+                beutel.inhalt.filterIsInstance<Powertrank>().first().anzahl -= 1
                 atk += 20
                 println("$name hat den Powertrank gewählt." +
                             " Seine Angriffspunkte sind jetzt bei $atk ATK.")
