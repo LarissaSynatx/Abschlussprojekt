@@ -1,4 +1,6 @@
 open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean) {
+    val maxHp: Int = hp
+    var verflucht: Boolean = false
 
     open fun basicAtk(gegner: Gegner) {
         val schaden= 10+atk
@@ -44,5 +46,6 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
     }
     override fun toString(): String {
         return name
+//        return "$name, $hp HP, $waffe, $atk ATK, Schild: $schild"
     }
 }

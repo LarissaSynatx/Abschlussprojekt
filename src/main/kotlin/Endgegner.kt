@@ -1,3 +1,5 @@
+import kotlin.random.Random
+
 class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
     private var gehilfe = 1
 
@@ -57,12 +59,32 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
         println("$name hat bei allen einen Schaden von $schaden verursacht!")
     }
 
-    fun beschwörungszauber(gegner: MutableList<Gegner>) {
-        val gehilfe1 = gegner.filterIsInstance<Gehilfe>().first()
+    fun beschwörungszauber() {
         if (gehilfe > 0) {
             println("$name beschwört ihre Gehilfin..")
             gehilfe = 0
-            gehilfe1.wurdeBeschworen = true
         } else println("$name hat den Zauber in dieser Runde bereits gesprochen..")
+    }
+    fun fluch(helden: MutableList<Held>) {
+        val held = helden.random()
+        held.verflucht = true
+        println("$name hat ${held.name} verflucht..!")
+    }
+//    val schaden = (held.hp * 0.1).toInt()
+//    held.hp -= schaden
+//    println("$name hat ${held.name} $schaden HP abgezogen!" +
+//    " Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.hp} HP.")
+//private  var flüche = 3
+    fun angriff(helden: MutableList<Held>) {
+        val randomAngriff = Random.nextInt(1,7)
+        when(randomAngriff){
+            1 -> unsichtbar(helden)
+            2 -> eisatem(helden)
+            3 -> schneesturm(helden)
+            4 -> fluch(helden)
+            5 -> basicAtk(helden)
+            6 -> powerAtk(helden)
+            7 -> beschwörungszauber()
+        }
     }
 }

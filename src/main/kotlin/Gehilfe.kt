@@ -1,7 +1,4 @@
-import kotlin.random.Random  //(Chatgpt)
-
-class Gehilfe(name: String, hp: Int, waffe: String, atk: Int, var wurdeBeschworen: Boolean = false) :
-    Gegner(name, hp, waffe, atk) {
+class Gehilfe(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
 
     fun anschleichen(held: Held) {
         val schaden = 50 + atk
