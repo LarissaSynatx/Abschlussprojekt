@@ -1,4 +1,4 @@
-class Zwerg(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean):Held(name,hp,waffe,atk,schild) {
+class Zwerg(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean,besiegt: Boolean):Held(name,hp,waffe,atk,schild,besiegt) {
     fun jumpAndHit(gegner: Gegner) {
         val schaden = (60..90).random() + atk
         println("Mit einem mächtigen Sprung stürzt $name sich auf seinen Gegner von oben herab und landet mit einem gewaltigen Schlag!")
@@ -10,6 +10,7 @@ class Zwerg(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean):Hel
         gegner.hp -= schaden
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
+
     fun spinAndHit(gegner: Gegner) {
         val schaden = 50 + atk
         println("$name setzt zum beeindruckenden Spin-Angriff an!")
@@ -23,31 +24,36 @@ class Zwerg(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean):Hel
         gegner.hp -= schaden
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
-   fun schildBlock(gegner: Gegner) {
-       println("$name hebt sein Schild und macht sich für den nächsten Angriff von ${gegner.name} bereit!")
-       schild = true
+
+    fun schildBlock(gegner: Gegner) {
+        println("$name hebt sein Schild und macht sich für den nächsten Angriff von ${gegner.name} bereit!")
+        schild = true
     }
     fun angriff(gegner: Gegner) {
-        println("$name ist bereit zu kämpfen!")
-        Thread.sleep(1000)
-        println("Wie möchtest du angreifen..?")
-        Thread.sleep(1000)
-        println("1 für Jump and hit")
-        Thread.sleep(500)
-        println("2 für Spin and hit")
-        Thread.sleep(500)
-        println("3 für Schildblock")
-        Thread.sleep(500)
-        println("4 für Basic-Attacke")
-        val input = readln().toInt()
-        println("Du hast dich für $input entschieden.")
-        Thread.sleep(1000)
-        when(input){
-            1 -> jumpAndHit(gegner)
-            2 -> spinAndHit(gegner)
-            3 -> schildBlock(gegner)
-            4 -> basicAtk(gegner)
-        }
-
+        if (!besiegt){
+            println("$name ist bereit zu kämpfen!")
+            Thread.sleep(1000)
+            println("Wie möchtest du angreifen..?")
+            Thread.sleep(1000)
+            println("1 für Jump and hit")
+            Thread.sleep(500)
+            println("2 für Spin and hit")
+            Thread.sleep(500)
+            println("3 für Schildblock")
+            Thread.sleep(500)
+            println("4 für Basic-Attacke")
+            Thread.sleep(500)
+            println("5 um in den Beutel zuschauen")
+            val input = readln().toInt()
+            println("Du hast dich für $input entschieden.")
+            Thread.sleep(1000)
+            when(input){
+                1 -> jumpAndHit(gegner)
+                2 -> spinAndHit(gegner)
+                3 -> schildBlock(gegner)
+                4 -> basicAtk(gegner)
+                5 -> beutel(Beutel())
+            }
+        } else println("$name wurde bereits besiegt..!")
     }
 }

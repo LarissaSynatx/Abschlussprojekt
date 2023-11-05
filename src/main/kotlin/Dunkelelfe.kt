@@ -1,5 +1,5 @@
-class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe: String, schild: Boolean) :
-    Held(name, hp, waffe, atk, schild) {
+class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe: String, schild: Boolean,besiegt: Boolean) :
+    Held(name, hp, waffe, atk, schild,besiegt) {
     fun feenfeuer(gegner: Gegner) {
         val schaden = 80 + atk
         println("$name erhebt ihre Hände und beschwört ihre Mächte. Plötzlich entzünden sich ihre Fingerspitzen in einem düsteren Feenfeuer.")
@@ -46,25 +46,30 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
     fun angriff(gegner: Gegner) {
-        println("$name ist bereit zu kämpfen!")
-        Thread.sleep(1000)
-        println("Wie möchtest du angreifen..?")
-        Thread.sleep(1000)
-        println("1 für Feenfeuer")
-        Thread.sleep(500)
-        println("2 für Dunkelheit")
-        Thread.sleep(500)
-        println("3 für Beide Waffen")
-        Thread.sleep(500)
-        println("4 für Basic-Attacke")
-        val input = readln().toInt()
-        println("Du hast dich für $input entschieden.")
-        Thread.sleep(1000)
-        when(input){
-            1 -> feenfeuer(gegner)
-            2 -> dunkelheit(gegner)
-            3 -> beideWaffen(gegner)
-            4 -> basicAtk(gegner)
-        }
+        if (!besiegt){
+            println("$name ist bereit zu kämpfen!")
+            Thread.sleep(1000)
+            println("Wie möchtest du angreifen..?")
+            Thread.sleep(1000)
+            println("1 für Feenfeuer")
+            Thread.sleep(500)
+            println("2 für Dunkelheit")
+            Thread.sleep(500)
+            println("3 für Beide Waffen")
+            Thread.sleep(500)
+            println("4 für Basic-Attacke")
+            Thread.sleep(500)
+            println("5 um in den Beutel zuschauen")
+            val input = readln().toInt()
+            println("Du hast dich für $input entschieden.")
+            Thread.sleep(1000)
+            when(input){
+                1 -> feenfeuer(gegner)
+                2 -> dunkelheit(gegner)
+                3 -> beideWaffen(gegner)
+                4 -> basicAtk(gegner)
+                5 -> beutel(Beutel())
+            }
+        } else println("$name wurde bereits besiegt..!")
     }
 }

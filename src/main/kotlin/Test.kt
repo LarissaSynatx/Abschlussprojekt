@@ -1,16 +1,17 @@
-import kotlin.concurrent.thread
-
 fun main() {
-    val druide = Druide("Alderwood", 500, "Stab", 100, false)
-    val zwerg = Zwerg("Gimli", 600, "Axt", 100, true)
-    val dunkelfee = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false)
-    val helden: MutableList<Held> = mutableListOf(druide,zwerg,dunkelfee)
+    val druide = Druide("Alderwood", 600, "Stab", 100, false,false)
+    val zwerg = Zwerg("Gimli", 600, "Axt", 100, true,false)
+    val dunkelelfe = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false,false)
+    val helden: MutableList<Held> = mutableListOf(druide,zwerg,dunkelelfe)
 
     val endgegner = Endgegner("Icy", 1000, "Hammer", 100)
 //    val gehilfe = Gehilfe("Stormy", 400, "Dolch", 100)
     val gegner: MutableList<Gegner> = mutableListOf(endgegner)
 
-    val beutel = Beutel()
+    val trank1 = Heiltrank()
+    val trank2 = Powertrank()
+    val beutel : MutableList<Trank> = mutableListOf(trank1,trank2) // Beutel ?!?!?!?!?
+
 
     println("")// Name Rollenspiel?!
     Thread.sleep(500)
@@ -46,21 +47,29 @@ fun main() {
             Thread.sleep(500)
             druide.angriff(endgegner,helden)
             zwerg.angriff(endgegner)
-            dunkelfee.angriff(endgegner)
+            dunkelelfe.angriff(endgegner)
             endgegner.angriff(helden)
-            if (druide.hp == 0) { //fertigstellen! -> Held = tot?!
-
+            if (druide.hp <= 0) {
+                druide.besiegt()
+                println("${druide.name} wurde besiegt!")
+            }
+            if (zwerg.hp <= 0) {
+                zwerg.besiegt()
+                println("${zwerg.name} wurde besiegt!")
+            }
+            if (dunkelelfe.hp <= 0) {
+                dunkelelfe.besiegt()
+                println("${dunkelelfe.name} wurde besiegt!")
             }
             if (helden.all { it.hp == 0 }) {
                 println("Icy hat gewonnen!")
-                break
-            } else if (endgegner.hp <= 0) {
+            }
+            if (endgegner.hp <= 0) {
                 println("Deine Helden haben gewonnen!")
-                break
             }
             runde++
         }
-        }
+
     }
 
 

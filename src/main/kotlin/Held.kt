@@ -1,4 +1,4 @@
-open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean) {
+open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean,var besiegt: Boolean = false) {
     val maxHp: Int = hp
     var verflucht: Boolean = false
 
@@ -21,7 +21,7 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
         }
         when (input) {
             1 -> {
-                beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1
+                beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1 // überarbeiten, zieht keinen Trank ab nach auswahl..
                 hp += 50
                 println("$name hat den Heiltrank gewählt." +
                             " Seine Lebenspunkte sind jetzt bei $hp HP.")
@@ -43,6 +43,9 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
 //                        " Seine Angriffspunkte sind jetzt bei $atk ATK.")
 //        }
 //    }
+    }
+    fun besiegt(){
+        besiegt = true
     }
     override fun toString(): String {
         return name
