@@ -1,6 +1,9 @@
+import kotlin.random.Random
+
 class Gehilfe(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
 
-    fun anschleichen(held: Held) {
+    fun anschleichen(helden: MutableList<Held>) {
+        val held = helden.random()
         val schaden = 50 + atk
         println(
             "Im Schatten der Dunkelheit bewegt sich $name geräuschlos.. " +
@@ -20,10 +23,19 @@ class Gehilfe(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp,
         println("Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.hp} HP.")
     }
 
-    fun stehlen(beutel: Beutel) {
+    private fun stehlen(beutel: Beutel) {
         beutel.inhalt.random().anzahl -= 1
         println("Es wurde ein Trank gestohlen..")
         println(beutel.inhalt)
+    }
+    fun angriff(helden: MutableList<Held>) {
+        val randomAngriff = Random.nextInt(1,5)
+        when(randomAngriff){
+            1 -> anschleichen(helden)
+            2 -> stehlen(Beutel())
+            3 -> basicAtk(helden)
+            4 -> powerAtk(helden)
+        }
     }
 }
 

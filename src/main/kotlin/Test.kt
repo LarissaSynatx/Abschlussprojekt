@@ -83,7 +83,7 @@ fun main() {
                 }
             } else dunkelelfe.angriff(gegner)
 
-            endgegner.angriff(helden)
+            endgegner.angriff(helden)   // Stimmt das?
             beutelCounter = 0
 
             if (druide.hp <= 0) {
