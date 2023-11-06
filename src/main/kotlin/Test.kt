@@ -1,17 +1,14 @@
 fun main() {
-    val druide = Druide("Alderwood", 600, "Stab", 100, false,false)
-    val zwerg = Zwerg("Gimli", 600, "Axt", 100, true,false)
-    val dunkelelfe = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false,false)
-    val helden: MutableList<Held> = mutableListOf(druide,zwerg,dunkelelfe)
+    val druide = Druide("Alderwood", 600, "Stab", 100, false, false)
+    val zwerg = Zwerg("Gimli", 600, "Axt", 100, true, false)
+    val dunkelelfe = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false, false)
+    val helden: MutableList<Held> = mutableListOf(druide, zwerg, dunkelelfe)
 
     val endgegner = Endgegner("Icy", 1000, "Hammer", 100)
-//    val gehilfe = Gehilfe("Stormy", 400, "Dolch", 100)
+//    val gehilfe = Gehilfe("Stormy", 400, "Dolch", 100) !!!!! Muss noch der Liste hinzugefügt werden!!!!
     val gegner: MutableList<Gegner> = mutableListOf(endgegner)
 
-    val trank1 = Heiltrank()
-    val trank2 = Powertrank()
-    val beutel : MutableList<Trank> = mutableListOf(trank1,trank2) // Beutel ?!?!?!?!?
-
+    val beutel = Beutel()
 
     println("")// Name Rollenspiel?!
     Thread.sleep(500)
@@ -27,8 +24,8 @@ fun main() {
 
         2 -> {
             println("Dein Team: ")
-            for (i in helden.indices)
-            println(helden[i])
+            for (i in helden)
+                i.info()
             println("-----------------------------------")
             println("Drücke 1 um das Spiel zu starten..")
             val input2 = readln().toInt()
@@ -40,15 +37,55 @@ fun main() {
         }
 
     }
-    if (input == 1){
+    if (input == 1) {
         var runde: Int = 1
-        while (true){
+        var beutelCounter = 0
+        while (true) {
             println("Runde $runde hat begonnen..")
             Thread.sleep(500)
-            druide.angriff(endgegner,helden)
-            zwerg.angriff(endgegner)
-            dunkelelfe.angriff(endgegner)
+            println(
+                "Drücke 1 um anzugreifen" +
+                        " Drücke 2 um in den Beutel zuschauen"
+            )
+            val input1 = readln().toInt()
+            when (input1) {
+                1 -> druide.angriff(gegner, helden)
+                2 -> {
+                    druide.beutel(beutel)
+                    beutelCounter++
+                }
+            }
+
+            if (beutelCounter < 1) {
+                println(
+                    "Drücke 1 um anzugreifen" +
+                            " Drücke 2 um in den Beutel zuschauen"
+                )
+                val input2 = readln().toInt()
+                when (input2) {
+                    1 -> zwerg.angriff(gegner)
+                    2 -> {
+                        zwerg.beutel(beutel)
+                        beutelCounter++
+                    }
+                }
+            } else zwerg.angriff(gegner)
+
+            if (beutelCounter < 1) {
+                println(
+                    "Drücke 1 um anzugreifen" +
+                            " Drücke 2 um in den Beutel zuschauen"
+                )
+                val input3 = readln().toInt()
+                when (input3) {
+                    1 -> dunkelelfe.angriff(gegner)
+                    2 -> dunkelelfe.beutel(beutel)
+                }
+            } else dunkelelfe.angriff(gegner)
+
             endgegner.angriff(helden)
+            beutelCounter = 0
+
             if (druide.hp <= 0) {
                 druide.besiegt()
                 println("${druide.name} wurde besiegt!")
@@ -72,25 +109,5 @@ fun main() {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//    beutel.inhalt()
-//    gegner.filterIsInstance<Gehilfe>().first().stehlen(beutel)
-//    gegner.filterIsInstance<Endgegner>().first().schneesturm(helden)
-//    val druide = Druide("Alderwood",500,"Stab",100,false)
-//    val zwerg = Zwerg("Gimli",600,"Axt",100,true)
-//    val dunkelelfe = Dunkelelfe("Lilithra",700,"Gurthang-Schwert",100,"Dolch",false)
-//    helden.filterIsInstance<Druide>().first().heilzauber(helden)
-//    helden.filterIsInstance<Druide>().first().beutel(beutel)
 
 }

@@ -1,6 +1,7 @@
 class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe: String, schild: Boolean,besiegt: Boolean) :
     Held(name, hp, waffe, atk, schild,besiegt) {
-    fun feenfeuer(gegner: Gegner) {
+    fun feenfeuer(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden = 80 + atk
         println("$name erhebt ihre Hände und beschwört ihre Mächte. Plötzlich entzünden sich ihre Fingerspitzen in einem düsteren Feenfeuer.")
         Thread.sleep(500)
@@ -14,7 +15,8 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
 
-    fun dunkelheit(gegner: Gegner) {
+    fun dunkelheit(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden = 70 + atk
         println("$name beschwört die Macht der Dunkelheit. Ihre Augen glühen in einem unheimlichen Schimmer, während sie die Finsternis um sich herum verstärkt.")
         Thread.sleep(500)
@@ -30,7 +32,8 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
 
-    fun beideWaffen(gegner: Gegner) {
+    fun beideWaffen(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden = (50..80).random() + atk
         println("$name zieht ihre Klingen, mit flinken Bewegungen bereitet sie sich auf ihren Angriff vor.")
         Thread.sleep(500)
@@ -45,7 +48,7 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
         gegner.hp -= schaden
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
-    fun angriff(gegner: Gegner) {
+    fun angriff(gegner: MutableList<Gegner>) {
         if (!besiegt){
             println("$name ist bereit zu kämpfen!")
             Thread.sleep(1000)
@@ -58,8 +61,6 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
             println("3 für Beide Waffen")
             Thread.sleep(500)
             println("4 für Basic-Attacke")
-            Thread.sleep(500)
-            println("5 um in den Beutel zuschauen")
             val input = readln().toInt()
             println("Du hast dich für $input entschieden.")
             Thread.sleep(1000)
@@ -68,8 +69,10 @@ class Dunkelelfe(name: String, hp: Int, waffe: String, atk: Int, var zweitwaffe:
                 2 -> dunkelheit(gegner)
                 3 -> beideWaffen(gegner)
                 4 -> basicAtk(gegner)
-                5 -> beutel(Beutel())
             }
         } else println("$name wurde bereits besiegt..!")
+    }
+    override fun info(){
+        println("$name, $hp HP, $waffe, Zweitwaffe: $zweitwaffe, $atk ATK, Schild: $schild")
     }
 }

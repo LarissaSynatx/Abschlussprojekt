@@ -2,7 +2,9 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
     val maxHp: Int = hp
     var verflucht: Boolean = false
 
-    open fun basicAtk(gegner: Gegner) {
+
+    open fun basicAtk(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden= 10+atk
         println("$name greift ${gegner.name} an und verursacht $schaden Schaden!")
         Thread.sleep(300)
@@ -21,7 +23,7 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
         }
         when (input) {
             1 -> {
-                beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1 // überarbeiten, zieht keinen Trank ab nach auswahl..
+                beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1
                 hp += 50
                 println("$name hat den Heiltrank gewählt." +
                             " Seine Lebenspunkte sind jetzt bei $hp HP.")
@@ -44,11 +46,47 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
 //        }
 //    }
     }
+    fun auswahl(helden:MutableList<Held>): Held?{
+        println("Auf welchen deiner Kameraden möchtest du die Aktion anwenden?")
+        println(helden)
+        var input = readln()
+        while (input != "Alderwood" && input != "Gimli" && input != "Lilithra" ){
+            println("Ungültige Eingabe..versuche es erneut!")
+            input = readln()
+        }
+        return helden.find { it.name == input }
+    }
     fun besiegt(){
         besiegt = true
     }
     override fun toString(): String {
         return name
-//        return "$name, $hp HP, $waffe, $atk ATK, Schild: $schild"
+    }
+    open fun info(){
+        println("$name, $hp HP, $waffe, $atk ATK, Schild: $schild")
+    }
+    fun auswahlGegnerTeam(gegner: MutableList<Gegner>): Gegner {
+        if (gegner.size == 1) {
+            return gegner.first()
+        } else {
+            println("Welchen deiner Gegner möchtest du angreifen?")
+            var counter = 1
+            for (i in gegner) {
+                println("$counter für ${i.name}")
+                counter++
+            }
+            var input = readln().toInt()
+            counter = 1
+            while (input !in 1..gegner.size) {
+                println("Ungültige Eingabe, versuche es erneut..")
+                println("Welchen deiner Gegner möchtest du angreifen?")
+                for (i in gegner) {
+                    println("$counter für ${i.name}")
+                    counter++
+                }
+                input = readln().toInt()
+            }
+            return gegner[input - 1]
+        }
     }
 }

@@ -1,5 +1,6 @@
 class Druide(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean,besiegt: Boolean) : Held(name, hp, waffe, atk, schild,besiegt) {
-    fun feuerzauber(gegner: Gegner) {
+    fun feuerzauber(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden = (40..80).random() + atk
         println("$name wirft einen Feuerzauber auf ${gegner.name}!")
         Thread.sleep(1000)
@@ -16,12 +17,13 @@ class Druide(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean,bes
         println("Die Lebenspunkte liegen jetzt bei ${heilen!!.hp} HP.")
     }
 
-    fun schutzzauber(gegner: Gegner) {
-        println("$name beschwört mit seinem Schutzzauber ein Schild, bevor der Angriff von ${gegner.name} ihn trifft und verringert damit den Schaden!")
+    fun schutzzauber() {
+        println("$name beschwört mit seinem Schutzzauber ein Schild, bevor der Angriff des Gegners ihn trifft und verringert damit den Schaden!")
         schild = true
     }
 
-    fun verwandlungszauber(gegner: Gegner) {
+    fun verwandlungszauber(gegner: MutableList<Gegner>) {
+        val gegner = auswahlGegnerTeam(gegner)
         val schaden = 50 + atk
         println(
             "$name's Atem wird schwer und tief, sein Körper beginnt zu zittern, und seine Haut nimmt eine tiefere, erdige Farbe an. " +
@@ -34,7 +36,7 @@ class Druide(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean,bes
         gegner.hp -= schaden
         println("Die Lebenspunkte von ${gegner.name} liegen jetzt bei ${gegner.hp} HP.")
     }
-    fun angriff(gegner: Gegner,helden: MutableList<Held>) {
+    fun angriff(gegner: MutableList<Gegner>, helden: MutableList<Held>) {
         if (!besiegt){
             println("$name ist bereit zu kämpfen!")
             Thread.sleep(1000)
@@ -47,17 +49,14 @@ class Druide(name: String, hp: Int, waffe: String, atk: Int, schild: Boolean,bes
             println("3 für Schutzzauber")
             Thread.sleep(500)
             println("4 für Verwandlungszauber")
-            Thread.sleep(500)
-            println("5 um in den Beutel zuschauen")
             val input = readln().toInt()
             println("Du hast dich für $input entschieden.")
             Thread.sleep(1000)
             when(input) {
                 1 -> feuerzauber(gegner)
                 2 -> heilzauber(helden)
-                3 -> schutzzauber(gegner)
+                3 -> schutzzauber()
                 4 -> verwandlungszauber(gegner)
-                5 -> beutel(Beutel())
             }
         } else println("$name wurde bereits besiegt..!")
     }

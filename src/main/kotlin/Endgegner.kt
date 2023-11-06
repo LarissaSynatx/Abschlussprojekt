@@ -3,6 +3,7 @@ import kotlin.random.Random
 class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
     private var gehilfe = 1
 
+
     fun unsichtbar(helden: MutableList<Held>) {
         val held = helden.random()
         if (!held.schild) {
@@ -67,6 +68,7 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
     }
     fun fluch(helden: MutableList<Held>) {
         val held = helden.random()
+
         held.verflucht = true
         println("$name hat ${held.name} verflucht..!")
     }
