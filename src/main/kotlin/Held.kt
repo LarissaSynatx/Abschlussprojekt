@@ -1,15 +1,25 @@
-open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var schild: Boolean,var besiegt: Boolean = false) {
-    val maxHp: Int = hp
+open class Held(
+    var name: String,
+    var maxHp: Int,
+    var waffe: String,
+    var atk: Int,
+    var schild: Boolean,
+    var besiegt: Boolean = false
+) {
+    var hp: Int = maxHp
     var verflucht: Boolean = false
 
 
     open fun basicAtk(gegner: MutableList<Gegner>) {
         val gegner = auswahlGegnerTeam(gegner)
-        val schaden= 10+atk
+        val schaden = 10 + atk
         println("$name greift ${gegner.name} an und verursacht $schaden Schaden!")
         Thread.sleep(300)
         gegner.hp -= schaden
         println("Die Lebenspunkte liegen jetzt bei ${gegner.hp} HP.")
+        Thread.sleep(500)
+        println("-- -- -- -- -- -- -- --")
+        Thread.sleep(500)
     }
 
     fun beutel(beutel: Beutel) {
@@ -24,47 +34,50 @@ open class Held(var name: String,var hp: Int,var waffe: String,var atk: Int,var 
         when (input) {
             1 -> {
                 beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1
-                hp += 50
-                println("$name hat den Heiltrank gewählt." +
-                            " Seine Lebenspunkte sind jetzt bei $hp HP.")
+                maxHp += 50
+                println(
+                    "$name hat den Heiltrank gewählt." +
+                            " Seine Lebenspunkte sind jetzt bei $maxHp HP."
+                )
+                Thread.sleep(500)
             }
+
             2 -> {
                 beutel.inhalt.filterIsInstance<Powertrank>().first().anzahl -= 1
                 atk += 20
-                println("$name hat den Powertrank gewählt." +
-                            " Seine Angriffspunkte sind jetzt bei $atk ATK.")
+                println(
+                    "$name hat den Powertrank gewählt." +
+                            " Seine Angriffspunkte sind jetzt bei $atk ATK."
+                )
+                println("-- -- -- -- -- -- -- --")
+                Thread.sleep(500)
             }
         }
-//        if (input==1){
-//            hp += 50
-//            println("$name hat den Heiltrank gewählt." +
-//                    " Seine Lebenspunkte sind jetzt bei $hp HP.")
-//        }else{
-//            atk += 20
-//            println("$name hat den Powertrank gewählt." +
-//                        " Seine Angriffspunkte sind jetzt bei $atk ATK.")
-//        }
-//    }
     }
-    fun auswahl(helden:MutableList<Held>): Held?{
+
+    fun auswahl(helden: MutableList<Held>): Held? {
         println("Auf welchen deiner Kameraden möchtest du die Aktion anwenden?")
         println(helden)
         var input = readln()
-        while (input != "Alderwood" && input != "Gimli" && input != "Lilithra" ){
+        while (input != "Alderwood" && input != "Gimli" && input != "Lilithra") {
             println("Ungültige Eingabe..versuche es erneut!")
             input = readln()
         }
         return helden.find { it.name == input }
     }
-    fun besiegt(){
+
+    fun besiegt() {
         besiegt = true
     }
+
     override fun toString(): String {
         return name
     }
-    open fun info(){
-        println("$name, $hp HP, $waffe, $atk ATK, Schild: $schild")
+
+    open fun info() {
+        println("$name, $maxHp HP, $waffe, $atk ATK, Schild: $schild")
     }
+
     fun auswahlGegnerTeam(gegner: MutableList<Gegner>): Gegner {
         if (gegner.size == 1) {
             return gegner.first()

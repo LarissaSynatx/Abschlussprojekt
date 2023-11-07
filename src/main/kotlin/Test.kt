@@ -4,13 +4,16 @@ fun main() {
     val dunkelelfe = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false, false)
     val helden: MutableList<Held> = mutableListOf(druide, zwerg, dunkelelfe)
 
-    val endgegner = Endgegner("Icy", 1000, "Hammer", 100)
-//    val gehilfe = Gehilfe("Stormy", 400, "Dolch", 100) !!!!! Muss noch der Liste hinzugefügt werden!!!!
-    val gegner: MutableList<Gegner> = mutableListOf(endgegner)
-
     val beutel = Beutel()
 
-    println("")// Name Rollenspiel?!
+    val endgegner = Endgegner("Icy", 1000, "Eis-Hammer", 100)
+    val gehilfe = Gehilfe("Stormy", 400, "Dolch", 100)
+    val gegner: MutableList<Gegner> = mutableListOf(endgegner)
+
+
+    println("Der Krieg des Schicksals: Die Eishexe erwacht")
+    Thread.sleep(500)
+    println("-- -- -- -- -- -- -- --")
     Thread.sleep(500)
     println("Drücke 1 um das Spiel zu starten")
     Thread.sleep(500)
@@ -19,6 +22,8 @@ fun main() {
     when (input) {
         1 -> {
             println("Das Spiel wird startet..")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
             Thread.sleep(1000)
         }
 
@@ -26,11 +31,14 @@ fun main() {
             println("Dein Team: ")
             for (i in helden)
                 i.info()
-            println("-----------------------------------")
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
             println("Drücke 1 um das Spiel zu starten..")
             val input2 = readln().toInt()
             if (input2 == 1) {
                 println("Das Spiel wird startet..")
+                Thread.sleep(500)
+                println("-- -- -- -- -- -- -- --")
                 Thread.sleep(500)
                 input = 1
             }
@@ -55,6 +63,10 @@ fun main() {
                     beutelCounter++
                 }
             }
+            if ((endgegner.hp <= 0 && !gehilfe.beschworen) || (gehilfe.beschworen && gehilfe.hp <= 0 && endgegner.hp <= 0)) {
+                println("Deine Helden haben gewonnen!")
+                break
+            }
 
             if (beutelCounter < 1) {
                 println(
@@ -70,6 +82,10 @@ fun main() {
                     }
                 }
             } else zwerg.angriff(gegner)
+            if ((endgegner.hp <= 0 && !gehilfe.beschworen) || (gehilfe.beschworen && gehilfe.hp <= 0 && endgegner.hp <= 0)) {
+                println("Deine Helden haben gewonnen!")
+                break
+            }
 
             if (beutelCounter < 1) {
                 println(
@@ -83,26 +99,34 @@ fun main() {
                 }
             } else dunkelelfe.angriff(gegner)
 
-            endgegner.angriff(helden)   // Stimmt das?
-            beutelCounter = 0
+            if ((endgegner.hp <= 0 && !gehilfe.beschworen) || (gehilfe.beschworen && gehilfe.hp <= 0 && endgegner.hp <= 0)) {
+                println("Deine Helden haben gewonnen!")
+                break
+            }
 
-            if (druide.hp <= 0) {
+            if (endgegner.hp > 0) {
+                endgegner.angriff(helden,gegner,gehilfe)
+            }
+            if (gehilfe.beschworen) {
+                gehilfe.angriff(helden)
+            }
+
+            beutelCounter = 0
+            if (druide.maxHp <= 0) {
                 druide.besiegt()
                 println("${druide.name} wurde besiegt!")
             }
-            if (zwerg.hp <= 0) {
+            if (zwerg.maxHp <= 0) {
                 zwerg.besiegt()
                 println("${zwerg.name} wurde besiegt!")
             }
-            if (dunkelelfe.hp <= 0) {
+            if (dunkelelfe.maxHp <= 0) {
                 dunkelelfe.besiegt()
                 println("${dunkelelfe.name} wurde besiegt!")
             }
-            if (helden.all { it.hp == 0 }) {
+            if (helden.all { it.maxHp == 0 }) {
                 println("Icy hat gewonnen!")
-            }
-            if (endgegner.hp <= 0) {
-                println("Deine Helden haben gewonnen!")
+                break
             }
             runde++
         }
