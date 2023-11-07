@@ -59,7 +59,7 @@ class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaf
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
     }
-    fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>, helden: MutableList<Held>) {
+    fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>) {
         if (verflucht && hp > maxHp * 0.2) {
             val schaden = maxHp * 0.1
             hp - schaden

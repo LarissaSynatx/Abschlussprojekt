@@ -42,7 +42,7 @@ class Zwerg(name: String, maxHp: Int, waffe: String, atk: Int, schild: Boolean, 
         Thread.sleep(500)
         schild = true
     }
-    fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>, helden: MutableList<Held>) {
+    fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>) {
         if (verflucht && hp > maxHp * 0.2) {
             val schaden = maxHp * 0.1
             hp - schaden

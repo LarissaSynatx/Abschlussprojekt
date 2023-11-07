@@ -57,7 +57,7 @@ fun main() {
             )
             val input1 = readln().toInt()
             when (input1) {
-                1 -> druide.angriff(gegner, helden)
+                1 -> druide.angriff(endgegner,gegner, helden)
                 2 -> {
                     druide.beutel(beutel)
                     beutelCounter++
@@ -75,13 +75,13 @@ fun main() {
                 )
                 val input2 = readln().toInt()
                 when (input2) {
-                    1 -> zwerg.angriff(gegner)
+                    1 -> zwerg.angriff(endgegner,gegner)
                     2 -> {
                         zwerg.beutel(beutel)
                         beutelCounter++
                     }
                 }
-            } else zwerg.angriff(gegner)
+            } else zwerg.angriff(endgegner,gegner)
             if ((endgegner.hp <= 0 && !gehilfe.beschworen) || (gehilfe.beschworen && gehilfe.hp <= 0 && endgegner.hp <= 0)) {
                 println("Deine Helden haben gewonnen!")
                 break
@@ -94,10 +94,10 @@ fun main() {
                 )
                 val input3 = readln().toInt()
                 when (input3) {
-                    1 -> dunkelelfe.angriff(gegner)
+                    1 -> dunkelelfe.angriff(endgegner,gegner)
                     2 -> dunkelelfe.beutel(beutel)
                 }
-            } else dunkelelfe.angriff(gegner)
+            } else dunkelelfe.angriff(endgegner,gegner)
 
             if ((endgegner.hp <= 0 && !gehilfe.beschworen) || (gehilfe.beschworen && gehilfe.hp <= 0 && endgegner.hp <= 0)) {
                 println("Deine Helden haben gewonnen!")
