@@ -28,3 +28,4 @@ Euer Ziel ist es, die Eishexe zu besiegen und den Fluch des ewigen Winters zu br
 
 ### Viel Erfolg, tapferer Held!
 
+![Bildschirmfoto 2023-11-06 um 16 24 19](https://github.com/LarissaSynatx/Abschlussprojekt/assets/144685090/2997fcb4-7202-42a5-b103-cf59a8612e52)
