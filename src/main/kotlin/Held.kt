@@ -40,10 +40,10 @@ open class Held(
         when (input) {
             1 -> {
                 beutel.inhalt.filterIsInstance<Heiltrank>().first().anzahl -= 1
-                maxHp += 50
+                hp += 50
                 println(
                     "$name hat den Heiltrank gewählt." +
-                            " Seine Lebenspunkte sind jetzt bei $maxHp HP."
+                            " Seine Lebenspunkte sind jetzt bei $hp HP."
                 )
                 Thread.sleep(500)
             }
