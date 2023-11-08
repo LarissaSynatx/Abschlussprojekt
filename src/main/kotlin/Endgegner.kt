@@ -77,7 +77,9 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
         println("Ihre Sicht wird von wirbelnden Schneemassen beeinträchtigt. Die Helden können sich kaum noch bewegen..")
         Thread.sleep(1000)
         println("Inmitten des tobenden Schneesturms steht $name und lächelt grausam, während sie die verzweifelten Bemühungen der Helden beobachtet.")
-        Thread.sleep(1000)
+        Thread.sleep(500)
+        println("-- -- -- -- -- -- -- --")
+        Thread.sleep(500)
         for (held in helden) {
             if (!held.schild) {
                 held.hp -= schaden
@@ -144,8 +146,7 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
 
     fun angriff(helden: MutableList<Held>, gegner: MutableList<Gegner>, gehilfe: Gehilfe) {
         if (flüche == 1 && !gehilfe.beschworen) {
-//            val randomAngriff = Random.nextInt(1, 7)
-            val randomAngriff = 3
+            val randomAngriff = Random.nextInt(1, 7)
             when (randomAngriff) {
                 1 -> unsichtbar(helden)
                 2 -> eisatem(helden)
