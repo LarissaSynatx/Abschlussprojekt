@@ -1,6 +1,6 @@
 class Zwerg(name: String, maxHp: Int, waffe: String, atk: Int, schild: Boolean, besiegt: Boolean):Held(name,maxHp,waffe,atk,schild,besiegt) {
     fun jumpAndHit(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = (60..90).random() + atk
         println("Mit einem mächtigen Sprung stürzt $name sich auf seinen Gegner von oben herab und landet mit einem gewaltigen Schlag!")
         Thread.sleep(1000)
@@ -13,11 +13,16 @@ class Zwerg(name: String, maxHp: Int, waffe: String, atk: Int, schild: Boolean, 
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
-
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
 
     fun spinAndHit(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = 50 + atk
         println("$name setzt zum beeindruckenden Spin-Angriff an!")
         Thread.sleep(1000)
@@ -32,7 +37,12 @@ class Zwerg(name: String, maxHp: Int, waffe: String, atk: Int, schild: Boolean, 
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
-
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
 
     fun schildBlock() {
@@ -44,9 +54,9 @@ class Zwerg(name: String, maxHp: Int, waffe: String, atk: Int, schild: Boolean, 
     }
     fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>) {
         if (verflucht && hp > maxHp * 0.2) {
-            val schaden = maxHp * 0.1
-            hp - schaden
-            println("Durch den Fluch von ${endGegner.name} hat $name $schaden HP verloren.")
+            val schaden = (maxHp * 0.1).toInt()
+            hp -= schaden
+            println("Durch ${endGegner.name}'s Fluch hat $name $schaden HP verloren.")
             Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)

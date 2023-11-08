@@ -1,6 +1,6 @@
 fun main() {
     val druide = Druide("Alderwood", 600, "Stab", 100, false, false)
-    val zwerg = Zwerg("Gimli", 600, "Axt", 100, true, false)
+    val zwerg = Zwerg("Gimli", 500, "Axt", 100, false, false)
     val dunkelelfe = Dunkelelfe("Lilithra", 700, "Gurthang-Schwert", 100, "Dolch", false, false)
     val helden: MutableList<Held> = mutableListOf(druide, zwerg, dunkelelfe)
 
@@ -107,7 +107,7 @@ fun main() {
             if (endgegner.hp > 0) {
                 endgegner.angriff(helden,gegner,gehilfe)
             }
-            if (gehilfe.beschworen) {
+            if (gehilfe.beschworen && gehilfe.hp > 0) {
                 gehilfe.angriff(helden)
             }
 

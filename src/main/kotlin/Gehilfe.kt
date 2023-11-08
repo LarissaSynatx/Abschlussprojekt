@@ -18,7 +18,7 @@ class Gehilfe(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp,
         Thread.sleep(1000)
         println("Der Überraschungsangriff von $name ist hinterhältig und gefährlich und hat $schaden Schaden verursacht!")
         Thread.sleep(1000)
-        held.maxHp -= schaden
+        held.hp -= schaden
         println("Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.maxHp} HP.")
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")

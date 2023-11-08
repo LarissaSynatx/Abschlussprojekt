@@ -2,6 +2,7 @@ import kotlin.random.Random
 
 class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, hp, waffe, atk) {
     var flüche = 1
+    var gehilfe = 1
     fun unsichtbar(helden: MutableList<Held>) {
         val held = helden.random()
         if (!held.schild) {
@@ -9,8 +10,8 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
             println("$name hat sich unsichtbar gemacht und greift nun hinterrücks ${held.name} an!")
             Thread.sleep(600)
             println("$name hat $schaden Schaden verursacht!")
-            held.maxHp -= schaden
-            println("Die Lebenspunkte liegen jetzt bei ${held.maxHp} HP.")
+            held.hp -= schaden
+            println("Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.hp} HP.")
             Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)
@@ -26,7 +27,7 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
             Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)
-            held.maxHp -= schaden
+            held.hp -= schaden
             held.schild = false
         }
     }
@@ -37,8 +38,12 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
             val schaden = 70 + atk
             println("$name holt tief Luft und entfesselt einen eisigen Atem!")
             Thread.sleep(500)
-            held.maxHp -= schaden
+            held.hp -= schaden
             println("${held.name} bekommt einen heftigen Frostschaden ab!")
+            Thread.sleep(500)
+            println("Schaden: $schaden")
+            Thread.sleep(500)
+            println("Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.hp} HP.")
             Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)
@@ -49,20 +54,23 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
             println("Doch ${held.name} kommt $name zuvor und schützt sich in letzter Sekunde mit seinem Schild vor dem eisigen Atem!")
             Thread.sleep(500)
             println("Durch ${held.name}'s Schild hat sich der Schaden um die hälfte verringert!")
+            Thread.sleep(500)
+            println("Schaden: $schaden")
+            Thread.sleep(500)
+            println("Die Lebenspunkte von ${held.name} liegen jetzt bei ${held.hp} HP.")
+            Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)
-            Thread.sleep(500)
-            held.maxHp -= schaden
+            held.hp -= schaden
             held.schild = false
         }
     }
 
     fun schneesturm(helden: MutableList<Held>) {
-        val held = helden
         val schaden = (30..60).random() + atk
         println("Ein unheilvoller Schauer überzieht den Himmel..")
         Thread.sleep(1000)
-        println("$name hat einen Schneestrum entfesselt und greift $held an!")
+        println("$name hat einen Schneestrum entfesselt und greift $helden an!")
         Thread.sleep(1000)
         println("Eisige Winde schneiden durch die Luft, und der Schnee wird zu gefrorenen Nadeln, die wie brennende Klingen in die Haut der Helden eindringen.")
         Thread.sleep(1000)
@@ -70,13 +78,24 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
         Thread.sleep(1000)
         println("Inmitten des tobenden Schneesturms steht $name und lächelt grausam, während sie die verzweifelten Bemühungen der Helden beobachtet.")
         Thread.sleep(1000)
-        for (i in helden.indices) {
-            helden[i].maxHp -= schaden
+        for (held in helden) {
+            if (!held.schild) {
+                held.hp -= schaden
+                println("$name hat bei ${held.name} einen Schaden von $schaden verursacht!")
+                Thread.sleep(500)
+                println("-- -- -- -- -- -- -- --")
+                Thread.sleep(500)
+            } else {
+                val schaden1 = (15..30).random() + atk
+                println("Durch ${held.name}'s Schild hat sich der Schaden verringert!" +
+                        " Schaden: $schaden1 ")
+                println("-- -- -- -- -- -- -- --")
+                Thread.sleep(500)
+                held.hp -= schaden1
+                held.schild = false
+            }
         }
-        println("$name hat bei allen einen Schaden von $schaden verursacht!")
-        Thread.sleep(500)
-        println("-- -- -- -- -- -- -- --")
-        Thread.sleep(500)
+
     }
 
     fun beschwörungszauber(gegner: MutableList<Gegner>, gehilfe: Gehilfe) {
@@ -106,6 +125,7 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
         val held = helden.random()
         if (!held.verflucht && flüche == 1) {
             held.verflucht = true
+            flüche = 0
             println("$name hebt ihren eiskalten Blick auf ${held.name} und beginnt, uralte Fluchformeln zu murmeln..")
             Thread.sleep(1000)
             println("Ein dunkler Schleier der Verdammnis senkt sich über ${held.name}, und sein Gesicht verzieht sich vor Qual.")
@@ -123,29 +143,30 @@ class Endgegner(name: String, hp: Int, waffe: String, atk: Int) : Gegner(name, h
     }
 
     fun angriff(helden: MutableList<Held>, gegner: MutableList<Gegner>, gehilfe: Gehilfe) {
-        if (flüche == 1) {
-            val randomAngriff = Random.nextInt(1, 7)
+        if (flüche == 1 && !gehilfe.beschworen) {
+//            val randomAngriff = Random.nextInt(1, 7)
+            val randomAngriff = 3
             when (randomAngriff) {
                 1 -> unsichtbar(helden)
                 2 -> eisatem(helden)
                 3 -> schneesturm(helden)
-                4 -> beschwörungszauber(gegner, gehilfe)
-                5 -> basicAtk(helden)
-                6 -> powerAtk(helden)
+                4 -> basicAtk(helden)
+                5 -> powerAtk(helden)
+                6 -> beschwörungszauber(gegner, gehilfe)
                 7 -> fluch(helden)
             }
         } else {
-            val randomAngriff = Random.nextInt(1, 6)
+            val randomAngriff = Random.nextInt(1, 5)
             when (randomAngriff) {
                 1 -> unsichtbar(helden)
                 2 -> eisatem(helden)
                 3 -> schneesturm(helden)
-                4 -> beschwörungszauber(gegner, gehilfe)
-                5 -> basicAtk(helden)
-                6 -> powerAtk(helden)
+                4 -> basicAtk(helden)
+                5 -> powerAtk(helden)
+                6 -> beschwörungszauber(gegner, gehilfe)
                 7 -> fluch(helden)
 
-            }
+                }
         }
     }
 }

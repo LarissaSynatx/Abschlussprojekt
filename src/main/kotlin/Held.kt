@@ -11,7 +11,7 @@ open class Held(
 
 
     open fun basicAtk(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = 10 + atk
         println("$name greift ${gegner.name} an und verursacht $schaden Schaden!")
         Thread.sleep(300)
@@ -20,6 +20,12 @@ open class Held(
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
 
     fun beutel(beutel: Beutel) {
@@ -78,8 +84,9 @@ open class Held(
         println("$name, $maxHp HP, $waffe, $atk ATK, Schild: $schild")
     }
 
-    fun auswahlGegnerTeam(gegner: MutableList<Gegner>): Gegner {
-        if (gegner.size == 1) {
+    fun auswahlGegner(gegnerListe: MutableList<Gegner>): Gegner {
+        val gegner = gegnerListe.filter{it.hp>0}
+        if (gegner.size < 2) {
             return gegner.first()
         } else {
             println("Welchen deiner Gegner möchtest du angreifen?")
@@ -89,14 +96,8 @@ open class Held(
                 counter++
             }
             var input = readln().toInt()
-            counter = 1
             while (input !in 1..gegner.size) {
                 println("Ungültige Eingabe, versuche es erneut..")
-                println("Welchen deiner Gegner möchtest du angreifen?")
-                for (i in gegner) {
-                    println("$counter für ${i.name}")
-                    counter++
-                }
                 input = readln().toInt()
             }
             return gegner[input - 1]

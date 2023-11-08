@@ -1,7 +1,7 @@
 class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaffe: String, schild: Boolean, besiegt: Boolean) :
     Held(name, maxHp, waffe, atk, schild,besiegt) {
     fun feenfeuer(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = 80 + atk
         println("$name erhebt ihre Hände und beschwört ihre Mächte. Plötzlich entzünden sich ihre Fingerspitzen in einem düsteren Feenfeuer.")
         Thread.sleep(1000)
@@ -16,11 +16,16 @@ class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaf
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
-
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde bereits besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
 
     fun dunkelheit(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = 70 + atk
         println("$name beschwört die Macht der Dunkelheit. Ihre Augen glühen in einem unheimlichen Schimmer, während sie die Finsternis um sich herum verstärkt.")
         Thread.sleep(1000)
@@ -37,11 +42,16 @@ class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaf
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
-
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
 
     fun beideWaffen(gegner: MutableList<Gegner>) {
-        val gegner = auswahlGegnerTeam(gegner)
+        val gegner = auswahlGegner(gegner)
         val schaden = (50..80).random() + atk
         println("$name zieht ihre Klingen, mit flinken Bewegungen bereitet sie sich auf ihren Angriff vor.")
         Thread.sleep(1000)
@@ -58,12 +68,18 @@ class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaf
         Thread.sleep(500)
         println("-- -- -- -- -- -- -- --")
         Thread.sleep(500)
+        if (gegner.hp <= 0) {
+            println("${gegner.name} wurde besiegt..!")
+            Thread.sleep(500)
+            println("-- -- -- -- -- -- -- --")
+            Thread.sleep(500)
+        }
     }
     fun angriff(endGegner: Endgegner, gegner: MutableList<Gegner>) {
         if (verflucht && hp > maxHp * 0.2) {
-            val schaden = maxHp * 0.1
-            hp - schaden
-            println("Durch den Fluch von ${endGegner.name} hat $name $schaden HP verloren.")
+            val schaden = (maxHp * 0.1).toInt()
+            hp -= schaden
+            println("Durch ${endGegner.name}'s Fluch hat $name $schaden HP verloren.")
             Thread.sleep(500)
             println("-- -- -- -- -- -- -- --")
             Thread.sleep(500)
@@ -99,7 +115,7 @@ class Dunkelelfe(name: String, maxHp: Int, waffe: String, atk: Int, var zweitwaf
                 3 -> beideWaffen(gegner)
                 4 -> basicAtk(gegner)
             }
-        } else println("$name wurde bereits besiegt..!")
+        } else println("$name wurde besiegt..!")
     }
     override fun info(){
         println("$name, $maxHp HP, $waffe, Zweitwaffe: $zweitwaffe, $atk ATK, Schild: $schild")
